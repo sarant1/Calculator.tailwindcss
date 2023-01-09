@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/dist/output.css" />
+</head>
+<body>
+    <div class="container-c h-screen flex justify-center items-center">
+        <div class="calculator bg-gray-700 rounded-lg" style="height: 600px; width: 450px;">
+            <div class="wrapper grid gap-5 grid-cols-4 p-5 rounded-lg h-full">
+                <div class="screen col-span-4 bg-black rounded-lg text-white text-7xl flex justify-end items-center pr-5">
+                    <div id="screen-number">0</div>
+                </div>
+                <button class="col-span-2 bg-slate-400 hover:bg-slate-300 rounded-lg" value="=">=</button>
+                <button class="bg-slate-400 hover:bg-slate-300 rounded-lg" value="A">AC</button>
+
+                <button class="custom-button" value="7">7</button>
+                <button class="custom-button" value="8">8</button>
+                <button class="custom-button" value="9">9</button>
+
+                <button class="custom-button" value="4">4</button>
+                <button class="custom-button" value="5">5</button>
+                <button class="custom-button" value="6">6</button>
+                
+                <button class="custom-button" value="1">1</button>
+                <button class="custom-button" value="2">2</button>
+                <button class="custom-button" value="3">3</button>
+
+                <button class="custom-button col-span-2" value="0">0</button>
+                <button class="custom-button" value=".">.</button>
+
+                
+                <button class="row-start-2 col-start-4 bg-gray-400 hover:bg-gray-200" value="+">+</button>
+                <button class="row-start-3 col-start-4 bg-gray-400 hover:bg-gray-200" value="-">-</button>
+                <button class="row-start-4 col-start-4 bg-gray-400 hover:bg-gray-200" value="*">*</button>
+                <button class="row-start-5 col-start-4 bg-gray-400 hover:bg-gray-200" value="/">/</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+
+    const screen = {
+        firstNum: null,
+        secondNum: null,
+        operator: null,
+        displayValue: ''
+    };
+    
+    const setScreenValue = num => {
+        screen.displayValue = screen.displayValue + num;
+        document.getElementById("screen-number").innerHTML = screen.displayValue;
+    }
+
+    const reset = () => {
+        screen.displayValue = '';
+        document.getElementById("screen-number").innerHTML = '0';
+    }
+
+    const calculate = () => {
+        result = eval(screen.firstNum + screen.operator + screen.secondNum);
+        screen.displayValue = Number(Number(result).toFixed(4));
+        document.getElementById("screen-number").innerHTML = screen.displayValue;
+    }
+
+
+    
+    
+    document.querySelector(".wrapper").addEventListener("click", (e) => {
+        const { target } = e;
+        
+        if (!target.matches('button')) {
+            return;
+        } else if (isNaN(target.getAttribute('value'))) {
+            let value = target.getAttribute('value');
+
+            switch(value) {
+                case '+':
+                case '-':
+                case '/':
+                case '*':
+                    screen.firstNum = screen.displayValue;
+                    screen.operator = value;
+                    screen.displayValue = '';
+                    return;
+                case 'A':
+                    reset();
+                    return;
+                case '=':
+                    screen.secondNum = screen.displayValue;
+                    calculate();
+                    return;
+            }
+
+        }
+
+        setScreenValue(target.getAttribute('value'));
+        
+    })
+
+    </script>
+</body>
+</html>

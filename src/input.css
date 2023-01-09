@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+button {
+    background-color: rgb(234 179 8 / var(--tw-bg-opacity));
+    border-radius: 0.5rem
+}
+
+.custom-button:hover {
+    background-color: rgb(250 204 21 / var(--tw-bg-opacity));
+}
